@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CyberShade Help</title>
+    <title>CyberHelp</title>
     <style>
         body {
             margin: 0;
@@ -47,6 +47,7 @@
             color: white;
             background-color: rgba(0, 0, 0, 0.7);
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
         }
 
         a {
@@ -57,14 +58,51 @@
         a:hover {
             text-decoration: underline;
         }
+
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            text-align: center;
+            z-index: 3;
+            display: none;
+        }
+
+        .popup button {
+            margin-top: 10px;
+            padding: 5px 10px;
+            font-size: 14px;
+            background: white;
+            color: black;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .popup button:hover {
+            background: lightgray;
+        }
     </style>
 </head>
 <body>
     <canvas></canvas>
     <div class="container">
-        <div class="box"><a href="cs://settings">Settings</a></div>
-        <div class="box"><a href="cs://games">Games</a></div>
-        <div class="box"><a href="cs://apps">Apps</a></div>
+        <div class="box" onclick="showPopup('settings')">Settings</div>
+        <div class="box" onclick="showPopup('games')">Games</div>
+        <div class="box" onclick="showPopup('apps')">Apps</div>
+    </div>
+
+    <div id="popup" class="popup">
+        <p id="popup-text"></p>
+        <button onclick="closePopup()">Close</button>
     </div>
 
     <script>
@@ -121,6 +159,30 @@
             requestAnimationFrame(animate);
         }
 
+        function showPopup(type) {
+            const popup = document.getElementById('popup');
+            const popupText = document.getElementById('popup-text');
+
+            switch (type) {
+                case 'settings':
+                    popupText.textContent = 'How to access settings: cs://settings - a static settings page you can access in the proxy';
+                    break;
+                case 'games':
+                    popupText.textContent = 'How to access games: cs://games - a games page you can access in the proxy';
+                    break;
+                case 'apps':
+                    popupText.textContent = 'How to access apps: cs://apps - an apps page you can access in the proxy';
+                    break;
+            }
+
+            popup.style.display = 'block';
+        }
+
+        function closePopup() {
+            const popup = document.getElementById('popup');
+            popup.style.display = 'none';
+        }
+
         initParticles();
         animate();
 
@@ -133,4 +195,3 @@
     </script>
 </body>
 </html>
-
